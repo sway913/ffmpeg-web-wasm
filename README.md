@@ -1,36 +1,5 @@
 # 前端通过 ffmpeg 库播放视频
 
-## 依赖库&编译工具
-# Get the emsdk repo
-git clone https://github.com/emscripten-core/emsdk.git
-
-# Enter that directory
-cd emsdk
-
-# Fetch the latest version of the emsdk (not needed the first time you clone)
-git pull
-
-我们使用的是3.1.10这个版本，升级版本需要大家一起测试后才能升.
-# Download and install the latest SDK tools.
-./emsdk install latest(3.1.10)
-
-# Make the "latest" SDK "active" for the current user. (writes .emscripten file)
-./emsdk activate latest(3.1.10)
-
-# linux/mac生效环境变量
-echo 'source "/home/ztz/work/emsdk/emsdk_env.sh"' >> $HOME/.bash_profile 
-or
-echo '. "/home/ztz/work/emsdk/emsdk_env.sh"' >> $HOME/.bashrc 
-
-下载、编译ffmpeg库
-```shell
-git submodule init
-git submodule update
-git submodule update --remote
-
-./build-ffmpeg.sh
-
-```
 
 先看一下 `chrome` 支持的视频格式与解码器：
 
@@ -46,53 +15,57 @@ git submodule update --remote
 
 ![时序图](./assets/program-sequence.png "时序图")
 
+## 依赖库&编译工具
+Get the emsdk repo
+```shell
+git clone https://github.com/emscripten-core/emsdk.git
+```
+
+Enter that directory
+```shell
+cd emsdk
+```
+
+Fetch the latest version of the emsdk (not needed the first time you clone)
+```shell
+git pull
+```
+
+我们使用的是3.1.10这个版本，升级版本需要大家一起测试后才能升.
+Download and install the latest SDK tools.
+```shell
+./emsdk install latest(3.1.10)
+
+Make the "latest" SDK "active" for the current user. (writes .emscripten file)
+```shell
+./emsdk activate latest(3.1.10)
+```
+
+linux/mac生效环境变量
+```shell
+echo 'source "/home/ztz/work/emsdk/emsdk_env.sh"' >> $HOME/.bash_profile 
+or
+echo '. "/home/ztz/work/emsdk/emsdk_env.sh"' >> $HOME/.bashrc 
+```
+
+下载ffmpeg库
+```shell
+git submodule init
+git submodule update
+git submodule update --remote
+
+```
+
+
 ## 构建 `ffmpeg` 库
 
 首先需要把 `ffmpeg` 编译成几个库，后续我们的 `C++` 解码程序就可以调用这个库里的方法，构建命令：
 
 ```shell
-CPPFLAGS="-D_POSIX_C_SOURCE=200112 -D_XOPEN_SOURCE=600" \
-emconfigure ./configure \
-    --prefix=$(pwd)/lib \
-    --cc="emcc" \
-    --cxx="em++" \
-    --ar="emar" \
-    --ranlib="emranlib" \
-    --target-os=none \
-    --enable-cross-compile \
-    --enable-lto \
-    --cpu=generic \
-    --arch=x86_64 \
-    --disable-asm \
-    --disable-inline-asm \
-    --disable-programs \
-    --disable-avdevice \
-    --disable-doc \
-    --disable-swresample \
-    --disable-postproc  \
-    --disable-avfilter \
-    --disable-pthreads \
-    --disable-w32threads \
-    --disable-os2threads \
-    --disable-network \
-    --disable-logging \
-    --disable-everything \
-    --enable-gpl \
-    --enable-version3 \
-    --enable-static \
-    --enable-demuxers \
-    --enable-parsers \
-    --enable-decoder=pcm_mulaw \
-    --enable-decoder=pcm_alaw \
-    --enable-decoder=adpcm_ima_smjpeg \
-    --enable-protocol=file \
-    --enable-protocol=pipe \
-    --enable-decoder=h264 \
-    --enable-decoder=hevc
 
-make && make install
+./lib/build-ffmpeg.sh
+
 ```
-
 以上构建命令成功后，将会得到下面的文件：
 
 ![lib*.a](./assets/build-artifacts.png "lib*.a")
