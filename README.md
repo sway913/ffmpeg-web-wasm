@@ -1,8 +1,14 @@
 # 前端通过 ffmpeg 库播放视频
 
+下载、编译ffmpeg库
+```shell
 git submodule init
 git submodule update
 git submodule update --remote
+
+./build-ffmpeg.sh
+
+```
 
 先看一下 `chrome` 支持的视频格式与解码器：
 
