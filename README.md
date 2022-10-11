@@ -1,5 +1,27 @@
 # 前端通过 ffmpeg 库播放视频
 
+## 依赖库&编译工具
+# Get the emsdk repo
+git clone https://github.com/emscripten-core/emsdk.git
+
+# Enter that directory
+cd emsdk
+
+# Fetch the latest version of the emsdk (not needed the first time you clone)
+git pull
+
+我们使用的是3.1.10这个版本，升级版本需要大家一起测试后才能升.
+# Download and install the latest SDK tools.
+./emsdk install latest(3.1.10)
+
+# Make the "latest" SDK "active" for the current user. (writes .emscripten file)
+./emsdk activate latest(3.1.10)
+
+# linux/mac生效环境变量
+echo 'source "/home/ztz/work/emsdk/emsdk_env.sh"' >> $HOME/.bash_profile 
+or
+echo '. "/home/ztz/work/emsdk/emsdk_env.sh"' >> $HOME/.bashrc 
+
 下载、编译ffmpeg库
 ```shell
 git submodule init
