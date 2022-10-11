@@ -35,6 +35,7 @@ git pull
 Download and install the latest SDK tools.
 ```shell
 ./emsdk install latest(3.1.10)
+```
 
 Make the "latest" SDK "active" for the current user. (writes .emscripten file)
 ```shell
