@@ -51,6 +51,8 @@ emconfigure ./configure \
     --enable-decoder=adpcm_ima_smjpeg \
     --enable-protocol=file \
     --enable-protocol=pipe \
+    --enable-protocol=http \
+    --enable-protocol=tcp \
     --enable-decoder=h264 \
     --enable-decoder=hevc
 
