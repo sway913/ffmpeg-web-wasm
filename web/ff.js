@@ -4990,7 +4990,7 @@ var _asyncify_start_rewind = Module["_asyncify_start_rewind"] = createExportWrap
 /** @type {function(...*):?} */
 var _asyncify_stop_rewind = Module["_asyncify_stop_rewind"] = createExportWrapper("asyncify_stop_rewind");
 
-var _ff_h264_cabac_tables = Module['_ff_h264_cabac_tables'] = 370917;
+var _ff_h264_cabac_tables = Module['_ff_h264_cabac_tables'] = 371765;
 
 
 

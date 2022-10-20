@@ -104,6 +104,7 @@ int DecoderReadPacket(void *opaque, uint8_t *buf, int buf_size)
 
 Decoder::Decoder(emscripten::val jsUpstream) : m_jsUpstream(jsUpstream)
 {
+  printf("Decoder create \n");
 }
 
 Decoder::~Decoder()

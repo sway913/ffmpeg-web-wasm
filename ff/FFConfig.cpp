@@ -85,6 +85,8 @@ void FFConfig::FFInitialize(registerModuleHandle handle)
 
 void FFConfig::Initialize()
 {
+    printf("FFConfig start \n");
     FFInitialize(registerModule);
     av_log_set_callback(FFLogCallbackFfmpeg);
+    printf("FFConfig finish \n");
 }

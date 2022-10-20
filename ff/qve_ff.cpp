@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <utility>
-
+#include "FFConfig.h"
 typedef int (*READ_PACKET)(void *opaque, uint8_t *buf, int buf_size);
 
 #ifdef __cplusplus
@@ -104,6 +104,8 @@ int DecoderReadPacket2(void *opaque, uint8_t *buf, int buf_size)
 
 Decoder2::Decoder2(emscripten::val jsUpstream) : m_jsUpstream(jsUpstream)
 {
+  printf("Decoder2 create \n");
+  FFConfig::Initialize();
 }
 
 Decoder2::~Decoder2()
@@ -141,11 +143,13 @@ DECODER_ERROR Decoder2::Initialize()
   }
 
   m_pFmtCtx = avformat_alloc_context();
-  m_pFmtCtx->pb = pIoCtx;
-  m_pFmtCtx->flags = AVFMT_FLAG_CUSTOM_IO;
+  // m_pFmtCtx->pb = pIoCtx;
+  // m_pFmtCtx->flags = AVFMT_FLAG_CUSTOM_IO;
 
+  std::string input_url = "wasmhttp://www.baidu.com";
   int ret;
-  while ((ret = avformat_open_input(&m_pFmtCtx, NULL, NULL, NULL)) == AVERROR(EAGAIN))
+  // while ((ret = avformat_open_input(&m_pFmtCtx, NULL, NULL, NULL)) == AVERROR(EAGAIN))
+  while ((ret = avformat_open_input(&m_pFmtCtx, input_url.c_str(), NULL, NULL)) == AVERROR(EAGAIN))
   {
   }
   if (ret)

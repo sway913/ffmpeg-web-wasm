@@ -44,7 +44,8 @@ async function initialize() {
   const source = {
     next: await beginReadPacket()
   }
-  const decoder = new Module.Decoder(source)
+  const decoder = new Module.Decoder2(source)
+  // const decoder = new Module.Decoder(source)
   const render = new WebglScreen(document.getElementById('canvas'))
 
   const { value: { width, height, codec, format } } = await decoder.next()

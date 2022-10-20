@@ -1,24 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <utility>
-#include <string>
 
 #ifdef __cplusplus
 extern "C"
 {
+#endif
 #include <libavutil/log.h>
 #include <libavformat/avformat.h>
 #include <libavcodec/avcodec.h>
 #include <libswscale/swscale.h>
 #include <libavformat/url.h>
 #include <libavutil/opt.h>
+#ifdef __cplusplus
 }
 #endif
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
-#include <emscripten/bind.h>
 #endif
 
 #define WASM_HTTP_TAG "[wasmhttp]"
@@ -44,6 +43,7 @@ static const AVClass wasmhttp_class = {
 
 static int wasm_http_read(URLContext *h, unsigned char *buf, int size)
 {
+  printf("%s:wasm_http_read \n", WASM_HTTP_TAG);
   WasmHttpContext *c = (WasmHttpContext *)h->priv_data;
   if (c->pos == c->filesize)
   {
@@ -73,6 +73,7 @@ static int wasm_http_read(URLContext *h, unsigned char *buf, int size)
 
 static int wasm_http_open(URLContext *h, const char *filename, int flags)
 {
+  printf("%s:wasm_http_open \n", WASM_HTTP_TAG);
   WasmHttpContext *c = (WasmHttpContext *)h->priv_data;
 
   if (filename == NULL)
@@ -96,6 +97,7 @@ static int wasm_http_open(URLContext *h, const char *filename, int flags)
 
 static int64_t wasm_http_seek(URLContext *h, int64_t pos, int whence)
 {
+  printf("%s:wasm_http_seek \n", WASM_HTTP_TAG);
   WasmHttpContext *c = (WasmHttpContext *)h->priv_data;
   if (whence == AVSEEK_SIZE)
   {
@@ -127,6 +129,7 @@ static int64_t wasm_http_seek(URLContext *h, int64_t pos, int whence)
 
 static int wasm_http_close(URLContext *h)
 {
+  printf("%s:wasm_http_close \n", WASM_HTTP_TAG);
   WasmHttpContext *c = (WasmHttpContext *)h->priv_data;
   av_log(NULL, AV_LOG_INFO, "%s close %s\n", WASM_HTTP_TAG, c->filename);
   return 0;
@@ -134,6 +137,7 @@ static int wasm_http_close(URLContext *h)
 
 static int wasm_http_write(URLContext *h, const unsigned char *buf, int size)
 {
+  printf("%s:wasm_http_write \n", WASM_HTTP_TAG);
   return 0;
 }
 
